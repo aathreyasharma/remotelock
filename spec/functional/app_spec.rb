@@ -27,19 +27,22 @@ RSpec.describe 'App Functional Test' do
     end
 
     it 'returns empty array if no input is passed' do
-      invalid_people_controller = PeopleController.new({dollar_format: nil,percent_format: nil,order: nil})
-      normalized_people = invalid_people_controller.normalize
+      people_controller = PeopleController.new({
+        dollar_format: nil,
+        percent_format: nil,
+        order: nil
+      })
+      normalized_people = people_controller.normalize
       expect(normalized_people).to eq []
     end
 
-
     it 'parses input files are return unordered normalized data' do
-      invalid_people_controller2 = PeopleController.new({
+      people_controller = PeopleController.new({
         dollar_format: File.read('spec/fixtures/people_by_dollar.txt'),
         percent_format: File.read('spec/fixtures/people_by_percent.txt'),
         order: nil
       })
-      normalized_people = invalid_people_controller2.normalize
+      normalized_people = people_controller.normalize
       expect(normalized_people).to eq [
         "Rhiannon, Los Angeles, 4/30/1974",
         "Rigoberto, New York City, 1/5/1962",
@@ -49,12 +52,12 @@ RSpec.describe 'App Functional Test' do
     end
 
     it 'parses input files are return normalized data ordered by birthdate' do
-      invalid_people_controller3 = PeopleController.new({
+      people_controller = PeopleController.new({
         dollar_format: File.read('spec/fixtures/people_by_dollar.txt'),
         percent_format: File.read('spec/fixtures/people_by_percent.txt'),
         order: :birthdate
       })
-      normalized_people = invalid_people_controller3.normalize
+      normalized_people = people_controller.normalize
       expect(normalized_people).to eq [
         "Elliot, New York City, 5/4/1947",
         "Rigoberto, New York City, 1/5/1962",
@@ -64,12 +67,12 @@ RSpec.describe 'App Functional Test' do
     end
 
     it 'parses input files are return normalized data ordered by last_name' do
-      invalid_people_controller3 = PeopleController.new({
+      people_controller = PeopleController.new({
         dollar_format: File.read('spec/fixtures/people_by_dollar.txt'),
         percent_format: File.read('spec/fixtures/people_by_percent.txt'),
         order: :last_name
       })
-      normalized_people = invalid_people_controller3.normalize
+      normalized_people = people_controller.normalize
       expect(normalized_people).to eq [
         "Mckayla, Atlanta, 5/29/1986",
         "Elliot, New York City, 5/4/1947",
